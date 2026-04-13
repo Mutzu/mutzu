@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mutzu — Task Manager</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ── Header ────────────────────────────────────────────────────────── -->
+  <header>
+    <div class="header-inner">
+      <h1>Mutzu <span>Task Manager</span></h1>
+      <span id="connection-badge" class="badge badge--connecting">Connecting...</span>
+    </div>
+  </header>
+
+  <!-- ── Main layout ───────────────────────────────────────────────────── -->
+  <main>
+
+    <!-- New Task Form -->
+    <section class="card" id="form-section">
+      <h2>New Task</h2>
+      <form id="task-form">
+        <div class="form-row">
+          <div class="form-group form-group--grow">
+            <label for="title">Title <span class="required">*</span></label>
+            <input type="text" id="title" placeholder="What needs to be done?" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group form-group--grow">
+            <label for="description">Description</label>
+            <textarea id="description" rows="2" placeholder="Optional details..."></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="priority">Priority</label>
+            <select id="priority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="status-select">Status</label>
+            <select id="status-select">
+              <option value="pending" selected>Pending</option>
+              <option value="in_progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+          <div class="form-group form-group--action">
+            <button type="submit" class="btn btn--primary" id="submit-btn">Add Task</button>
+            <button type="button" class="btn btn--ghost" id="cancel-btn" hidden>Cancel</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+      <div class="filter-group">
+        <label>Filter by status:</label>
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="pending">Pending</button>
+        <button class="filter-btn" data-filter="in_progress">In Progress</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+      </div>
+      <div class="stats" id="stats">Loading...</div>
+    </section>
+
+    <!-- Task List -->
+    <section id="task-list-section">
+      <div id="task-list" class="task-grid"></div>
+      <div id="empty-state" class="empty-state" hidden>
+        <p>No tasks here yet. Create one above!</p>
+      </div>
+      <div id="loading-state" class="empty-state">
+        <p>Loading tasks...</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Edit Modal ─────────────────────────────────────────────────────── -->
+  <div id="modal-overlay" class="modal-overlay" hidden>
+    <div class="modal">
+      <h2>Edit Task</h2>
+      <form id="edit-form">
+        <input type="hidden" id="edit-id" />
+        <div class="form-group">
+          <label for="edit-title">Title <span class="required">*</span></label>
+          <input type="text" id="edit-title" required />
+        </div>
+        <div class="form-group">
+          <label for="edit-description">Description</label>
+          <textarea id="edit-description" rows="3"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-priority">Priority</label>
+            <select id="edit-priority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-status">Status</label>
+            <select id="edit-status">
+              <option value="pending">Pending</option>
+              <option value="in_progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="btn btn--primary">Save Changes</button>
+          <button type="button" class="btn btn--ghost" id="modal-cancel">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Toast notifications ───────────────────────────────────────────── -->
+  <div id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
